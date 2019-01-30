@@ -6,7 +6,7 @@ import {
     StyleSheet,
 } from 'react-native';
 
-export default class HomePage extends Component {
+export  class HomePage extends Component {
     static navigationOptions = {
         tabBarLabel: '首页',
         tabBarIcon: ({focused}) => {
