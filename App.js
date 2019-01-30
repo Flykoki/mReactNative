@@ -32,7 +32,14 @@ class SettingsScreen extends React.Component {
 }
 class ProfileScreen extends React.Component {
   static navigationOptions = {
-    title: "文档"
+    title: "文档",
+    headerStyle: {
+      backgroundColor: "green"
+    },
+    headerTintColor: "#aaa",
+    headerTitleStyle: {
+      fontWeight: "bold"
+    }
   };
   render() {
     return (
@@ -42,6 +49,8 @@ class ProfileScreen extends React.Component {
     );
   }
 }
+
+
 class InfoScreen extends React.Component {
   static navigationOptions = {
     title: "资讯"

@@ -11,7 +11,14 @@ import {
 
 export class HomeScreen extends Component {
   static navigationOptions = {
-    title: "首页aa"
+    title: "首页aa",
+    headerStyle: {
+      backgroundColor: 'green',
+    },
+    headerTintColor: '#aaa',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
   };
   componentDidMount() {
     console.log("HomeScreen componentDidMount");

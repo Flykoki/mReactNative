@@ -15,6 +15,6 @@ export const HomeStack = createStackNavigator(
   },
   {
     initialRouteName: "Home",
-    title: "this navigation title"
+    title: "this navigation title",
   }
 );
