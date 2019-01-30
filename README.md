@@ -1,3 +1,3 @@
 # mReactNative
 rn:
-这是一个Demo
+这是一个RN Demo
