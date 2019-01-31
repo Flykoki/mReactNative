@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { Image, View, Text, Button, StyleSheet } from "react-native";
 import {
   createAppContainer,
   createBottomTabNavigator,
@@ -14,7 +14,9 @@ import { HomeStack } from "./src/home/HomeStack";
 
 class SettingsScreen extends React.Component {
   static navigationOptions = {
-    title: "设置"
+    header: null, //header置空
+    title: "设置",
+    mode: "modal"
   };
   render() {
     return (
@@ -33,6 +35,7 @@ class SettingsScreen extends React.Component {
 class ProfileScreen extends React.Component {
   static navigationOptions = {
     title: "文档",
+    headerTitleStyle: { flex: 1, textAlign: "center" },
     headerStyle: {
       backgroundColor: "green"
     },
@@ -50,7 +53,6 @@ class ProfileScreen extends React.Component {
   }
 }
 
-
 class InfoScreen extends React.Component {
   static navigationOptions = {
     title: "资讯"
@@ -64,10 +66,30 @@ class InfoScreen extends React.Component {
   }
 }
 
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
-  Profile: ProfileScreen
-});
+class HeaderBackImage extends React.Component {
+  render() {
+    return (
+      <Image
+        source={require("./src/img/swiper_1.jpg")}
+        style={{ width: 30, height: 30, marginLeft: 9 }}
+      />
+    );
+  }
+}
+
+const SettingsStack = createStackNavigator(
+  {
+    Settings: SettingsScreen,
+    Profile: ProfileScreen
+  },
+  {
+    defaultNavigationOptions: {
+      headerMode: "none",
+      headerBackImage: <HeaderBackImage />,
+      headerBackTitle: "headerBackTitle&img"
+    }
+  }
+);
 
 const InfoStack = createStackNavigator({
   Infos: InfoScreen
@@ -80,6 +102,8 @@ const TabNavigator = createBottomTabNavigator(
   },
   {
     tabBarOptions: {
+      activeTintColor: "green",
+      activeBackgroundColor: "grey",
       showIcon: true,
       pressColor: "#788493",
       //tab bar的样式
@@ -101,7 +125,8 @@ const TabNavigator = createBottomTabNavigator(
     animationEnabled: true,
     lazy: true,
     backBehavior: "initialRoute",
-    initialRouteName: "首页"
+    initialRouteName: "首页",
+    order: ["设置", "首页", "资讯"] //tab显示顺序
   }
 );
 

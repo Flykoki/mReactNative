@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { Image,View, Text, Button, StyleSheet } from "react-native";
 import {
   createAppContainer,
   createBottomTabNavigator,
@@ -9,6 +9,17 @@ import {
   NavigationActions
 } from "react-navigation"; // Version can be specified in package.json
 
+// import Styles from "../utils/StyleUtils";
+class HomeTitle extends React.Component {
+  render() {
+    return (
+      <Image
+        source={require("../img/task_sel.png")}
+        style={{ width: 30, height: 30, marginLeft: 9 }}
+      />
+    );
+  }
+}
 export class DetailsScreen extends React.Component {
   static navigationOptions = ({
     navigation,
@@ -16,6 +27,7 @@ export class DetailsScreen extends React.Component {
     navigationOptions
   }) => {
     return {
+      headerBackImage: <HomeTitle />,
       title: navigation.getParam("param1", "A Nested Details Screen")
     };
   };
@@ -34,6 +46,7 @@ export class DetailsScreen extends React.Component {
       <View
         style={{
           flex: 1,
+          flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
           padding: 5,
@@ -44,6 +57,7 @@ export class DetailsScreen extends React.Component {
           Details screen {pa} {intParam}
         </Text>
         <Button
+          style={{ paddingTop: 99 }}
           title="update title"
           onPress={() =>
             this.props.navigation.setParams({ param1: "update title content" })
