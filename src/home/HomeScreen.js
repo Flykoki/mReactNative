@@ -7,6 +7,8 @@ import {
   Button,
   StyleSheet
 } from "react-native";
+import { fetchRequest } from "../utils/FetchUtil";
+import ToastUtil from "../utils/ToastUtil";
 import {
   createAppContainer,
   createBottomTabNavigator,
@@ -71,22 +73,72 @@ class HeaderLeft extends React.Component {
 }
 
 export class HomeScreen extends Component {
-  static navigationOptions = {
-    title: "首页aa",
-    headerTitleStyle:{flex: 1,textAlign:'center'},
-    headerRight: <HeaderRight />,
-    headerLeft: <HeaderLeft />,
-    headerStyle: {
-      backgroundColor: "green"
-    },
-    headerTintColor: "#aaa",
-    headerTitleStyle: {
-      fontWeight: "bold"
-    },
-    tabBarIcon: ({ tintColor }) => <Icon name="../img/home_nor.png" />
+  static navigationOptions = ({
+    navigation,
+    screenProps,
+    navigationOptions
+  }) => ({
+    title: "首页"
+    // headerTitleStyle: { flex: 1, textAlign: "center" },
+    // headerRight: <HeaderRight />,
+    // headerLeft: <HeaderLeft />,
+    // headerStyle: {
+    //   backgroundColor: "green"
+    // },
+    // headerTintColor: "#aaa",
+    // headerTitleStyle: {
+    //   fontWeight: "bold"
+    // },
+    // tabBarIcon: ({ focused }) => {
+    //   console.warn('home screen focused:'+focused)
+    //   if (focused) {
+    //     return (
+    //       <Image
+    //         style={{ width: 19, height: 19 }}
+    //         source={require("../img/task_sel.png")}
+    //       />
+    //     );
+    //   } else {
+    //     return (
+    //       <Image
+    //         style={{ width: 19, height: 19 }}
+    //         source={require("../img/task_nor.png")}
+    //       />
+    //     );
+    //   }
+    // }
+  });
+
+  loginTest = () => {
+    url = "/user/login";
+    let data = new FormData();
+    data.append("username", "lfj123");
+    data.append("password", "lfj123");
+    console.log("linfj login req:" + JSON.stringify(data));
+    // data = {
+    //   username: "lfj123",
+    //   password: "lfj123"
+    // };
+
+    fetchRequest(url, "POST", data)
+      .then(res => {
+        console.log("linfj login res:" + res);
+        console.log(res.data);
+
+        if (res.respCode === 200) {
+          ToastUtil.showShort(res.data);
+        } else {
+          ToastUtil.showShort(res.respMsg);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        ToastUtil.showShort(error);
+      });
   };
   componentDidMount() {
     console.log("HomeScreen componentDidMount");
+    this.loginTest();
   }
   componentWillUnmount() {
     console.log("HomeScreen componentWillUnmount");
@@ -99,6 +151,7 @@ export class HomeScreen extends Component {
         <Button
           title="Go to Details"
           onPress={() => {
+            this.loginTest();
             this.props.navigation.navigate("Details", {
               param1: "this is a param",
               param2: 11111
