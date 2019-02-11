@@ -22,9 +22,11 @@ import {
 // import Ionicons from "react-native-vector-icons/Ionicons";
 import { TabNav } from "./src/page/RootPage";
 import { FeedScreen } from "./src/DrawerStack/FeedScreen";
+import { DetailsScreen } from "./src/home/DetailPage";
 import { FriendListScreen } from "./src/DrawerStack/FriendListScreen";
 import { HomeStack } from "./src/home/HomeStack";
 import { HomeScreen } from "./src/home/HomeScreen";
+// import { LoadMoreDemo } from "./src/PullListDemo";
 import { BottomNavigatorWithCus } from "./src/bottomNavigator/bottomnavigatorwithcus";
 import SwitchNavigatorCus from "./src/switchNavigator/switchNaviagator";
 import StatuBarNavigator from "./src/statusbar/StatusBarNavigator";
@@ -33,7 +35,25 @@ class SettingsScreen extends React.Component {
   static navigationOptions = {
     header: null, //header置空
     title: "设置",
-    mode: "modal"
+    mode: "modal",
+    tabBarIcon: ({ focused }) => {
+      // console.warn("home screen focused:" + focused);
+      if (focused) {
+        return (
+          <Image
+            style={{ width: 19, height: 19 }}
+            source={require("./src/img/car_sel.png")}
+          />
+        );
+      } else {
+        return (
+          <Image
+            style={{ width: 19, height: 19 }}
+            source={require("./src/img/car_nor.png")}
+          />
+        );
+      }
+    }
   };
   render() {
     return (
@@ -42,7 +62,7 @@ class SettingsScreen extends React.Component {
         <Button
           title="Go to Details"
           onPress={() => {
-            this.props.navigation.navigate("Profile");
+            this.props.navigation.navigate("Details");
           }}
         />
       </View>
@@ -100,7 +120,7 @@ class InfoScreen extends React.Component {
       payload =>
         BackHandler.removeEventListener("hardwareBackPress", this.onBackPress)
     );
-  } 
+  }
 
   componentWillUnmount() {
     this.didFocusSubscription && this.didFocusSubscription.remove();
@@ -158,8 +178,7 @@ class HeaderBackImage extends React.Component {
 
 const SettingsStack = createStackNavigator(
   {
-    Settings: SettingsScreen,
-    Profile: ProfileScreen
+    Settings: SettingsScreen
   },
   {
     defaultNavigationOptions: {
@@ -201,9 +220,12 @@ const InfoStack = createStackNavigator({
 //==================================  Bottom tab navigator =============================
 const BottomTabNavigator = createBottomTabNavigator(
   {
-    首页: HomeStack,
+    // 首页: LoadMoreDemo,
+    首页: HomeScreen,
     资讯: InfoScreen,
-    设置: SettingsStack
+    设置: SettingsScreen,
+    Details: DetailsScreen,
+    Profile: ProfileScreen
   },
   {
     tabBarOptions: {
@@ -229,9 +251,10 @@ const BottomTabNavigator = createBottomTabNavigator(
     swipeEnabled: true,
     animationEnabled: true,
     lazy: true,
-    backBehavior: "initialRoute",
+    headerMode: 'screen',
+    // backBehavior: "initialRoute",
     initialRouteName: "首页",
-    order: ["设置", "首页", "资讯"] //tab显示顺序
+    order: ["首页", "资讯", , "设置"] //tab显示顺序
   }
 );
 //==================================  Bottom tab navigator =============================

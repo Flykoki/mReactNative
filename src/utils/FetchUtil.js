@@ -1,6 +1,6 @@
 import ToastUtil from "./ToastUtil";
 
-export const common_url = "http://www.wanandroid.com"; //服务器地址
+export const common_url = "http://www.wanandroid.com/"; //服务器地址
 // export const common_url = 'http://39.104.64.38:81/app/';  //服务器地址
 /**
  * @param {string} url 接口地址
@@ -10,7 +10,7 @@ export const common_url = "http://www.wanandroid.com"; //服务器地址
  * @return {Promise<any> | Promise}
  */
 export const fetchRequest = (url, method, params) => {
-  /* let header = {
+  /* let header = {d
         // "Content-Type": "application/json",
         // ;charset=UTF-8
         "Content-Type": "multipart/form-data;charset=UTF-8",

@@ -12,7 +12,6 @@ import {
 export const HomeStack = createStackNavigator(
   {
     Home: HomeScreen,
-    Details: DetailsScreen
   },
   {
     initialRouteName: "Home",
