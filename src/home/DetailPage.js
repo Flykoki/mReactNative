@@ -65,7 +65,7 @@ export class DetailsScreen extends React.Component {
         />
         <Button
           title="Go to Home"
-          onPress={() => this.props.navigation.navigate("Home")}
+          onPress={() => this.props.navigation.navigate("首页")}
         />
         <Button
           title="Go back"

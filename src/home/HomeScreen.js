@@ -3,6 +3,7 @@ import {
   TouchableOpacity,
   Image,
   View,
+  SafeAreaView,
   ActivityIndicator,
   TouchableNativeFeedback,
   RefreshControl,
@@ -18,6 +19,7 @@ import {
   createBottomTabNavigator,
   createTabNavigator,
   createStackNavigator,
+  StatusBar,
   StackActions,
   NavigationActions
 } from "react-navigation"; // Version can be specified in package.json
@@ -189,14 +191,14 @@ export class HomeScreen extends Component {
   //显示FlatList
   renderData() {
     return (
-      <View style={{ backgroundColor: "white" }}>
+      <View style={styles.flatListContain}>
         <FlatList
           data={this.state.dataArray}
-          renderItem={this._renderItemView}
+          renderItem={this._renderItemView.bind(this)}
           ListFooterComponent={this._renderFooter}
           onEndReached={this._onEndReached}
           onEndReachedThreshold={1}
-          ItemSeparatorComponent={this._separator}
+          // ItemSeparatorComponent={this._separator}
           keyExtractor={this._keyExtractor}
           //为刷新设置颜色
           refreshControl={
@@ -215,20 +217,17 @@ export class HomeScreen extends Component {
   _keyExtractor = (item, index) => index;
 
   //返回itemView
-  _renderItemView = ({ item }) => {
-    console.log("linfj renderitemView:", this.props);
+  _renderItemView({ item }) {
+    console.log("linfj renderitemView:", this.props.navigation);
     const gotoDetails = () => {
       console.log("onpress");
       const ret = this.props.navigation.navigate("Details");
-      console.log("ret", ret);
+      console.log("lfj ", ret);
     }; //跳转并传值
     return (
       // <TouchableNativeFeedback onPress={() => {Actions.news({'url':item.url})}} >////切记不能带（）不能写成gotoDetails()
-      <TouchableNativeFeedback
-        style={styles.flatListItem}
-        onPress={() => this.props.navigation.navigate("Details")}
-      >
-        <View>
+      <TouchableNativeFeedback onPress={gotoDetails}>
+        <View style={styles.flatListItemWithShadow}>
           <Text style={styles.title}>{item.title}</Text>
           <Text style={styles.content}>
             作者: {item.author} 时间: {item.niceDate}
@@ -239,7 +238,7 @@ export class HomeScreen extends Component {
         </View>
       </TouchableNativeFeedback>
     );
-  };
+  }
 
   //滑动到底部
   _onEndReached = () => {
@@ -305,6 +304,7 @@ export class HomeScreen extends Component {
   }
   //刷新时
   handleRefresh = () => {
+    console.log("lfj handleRefresh");
     this.setState({
       page: 1,
       isRefreshing: true, //tag,下拉刷新中，加载完全，就设置成flase
@@ -316,6 +316,7 @@ export class HomeScreen extends Component {
   renderLoadingView() {
     return (
       <View style={styles.container}>
+        {/* <StatusBar barStyle="light-content" backgroundColor="white" /> */}
         <ActivityIndicator animating={true} color="blue" size="large" />
       </View>
     );
@@ -324,6 +325,7 @@ export class HomeScreen extends Component {
   renderErrorView() {
     return (
       <View style={styles.container}>
+        {/* <StatusBar barStyle="light-content" backgroundColor="white" /> */}
         <Text>{this.state.errorInfo}</Text>
       </View>
     );
@@ -364,9 +366,18 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "black"
   },
-  flatListItem: {
-    margin: 8,
-    padding: 8,
+  flatListItemWithShadow: {
+    margin: 5,
+    backgroundColor: "white",
+    shadowColor: "#000",
+    // shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.8,
+    shadowRadius: 6,
+    elevation: 9,
+    borderRadius: 8
+  },
+  flatListContain: {
     backgroundColor: "white"
+    // backgroundColor: "#B0C4DE"
   }
 });
